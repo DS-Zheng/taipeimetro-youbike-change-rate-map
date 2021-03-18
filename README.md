@@ -55,3 +55,34 @@ def find(station):
         # if (x-center_x)^2 + (y - center_y)^2 < radius^2 -> this ubike station in this mrt_station
     return radius, center_lat, center_lon, list(set(neighbor))
  ```
+ 
+## Create Youbike_station Static Data
+#### code -> get_youbike_data.py
+
+```python
+import pandas as pd
+
+data = pd.read_csv('./data/201812.csv')
+df_rent = pd.DataFrame(data.groupby(['rent_time', 'rent_station']).size(), columns=['rent_size']).reset_index()
+df_return = pd.DataFrame(data.groupby(['return_time', 'return_station']).size(), columns=['return_size']).reset_index()
+
+
+def get_size(temp, station):
+    # get each station static data
+    if temp == 'rent':
+        return df_rent[df_rent['rent_station'].isin([station])].reset_index(drop=True)
+    else:
+        return df_return[df_return['return_station'].isin([station])].reset_index(drop=True)
+
+
+def cal_data(temp, station_list):
+    # Calculate near station static data
+    df = pd.DataFrame()
+    for station in station_list:
+        df = df.append(get_size(temp, station))
+    if temp == 'rent':
+        return df.groupby(['rent_time']).sum().reset_index().rename(columns={'rent_time': 'time', 'rent_size': 'size'})
+    else:
+        return df.groupby(['return_time']).sum().reset_index().rename(columns={'return_time': 'time', 'return_size': 'size'})
+ ```
+ 
