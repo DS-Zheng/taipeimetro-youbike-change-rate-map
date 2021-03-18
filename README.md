@@ -28,6 +28,7 @@ df_in.rename(columns={'進站': '站點'}).to_csv('./data/in.csv', index=False, 
 
 df_out = df.groupby(['time', '出站']).sum().reset_index()
 df_out.rename(columns={'出站': '站點'}).to_csv('./data/out.csv', index=False, encoding='utf-8-sig')
+```
 
 ## Data Prepare
 #### mrt_data_prepare.py
