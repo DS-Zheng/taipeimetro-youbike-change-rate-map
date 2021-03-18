@@ -180,11 +180,78 @@ def get_circle_json(station_dict):
 {"type": "FeatureCollection", "features": [{"type": "Feature", "id": "中山", "properties": {"name": "中山"}, "geometry": {"type": "Polygon", "coordinates": [[[121.52219366666667, 25.05068916666667]...]]]}}]}    
 ```
 
-
-
  ## Preview state_geo on [geojson.io](https://geojson.io/#map=12/25.0651/121.5423)
   #### square
  ![preview_square](preview_square.PNG)
   #### circle
  ![preview_circle](preview_circle.PNG)
+ 
+## Let Square or Circle Geojson to Heatmap
+#### code -> plot_map.py --> plot_choropleth()
+```python
+import folium
+import branca.colormap as cm
+
+
+def plot_choropleth(data, state_geo, time, temp, sh):
+    print(data)
+    fmap = folium.Map(location=[25.0516, 121.552], zoom_start=13)
+    folium.TileLayer('CartoDB positron', name="Light Map", control=False).add_to(fmap)
+    folium.Choropleth(
+        geo_data=state_geo,
+        data=data,
+        name='choropleth',
+        columns=['station', 'rate'],
+        key_on='feature.id',
+        fill_color='YlGn',
+        fill_opacity=0.5,
+        line_opacity=0,
+        highlight=True,
+        legend_name='ubike % MRT 轉換率',
+        reset=True
+    ).add_to(fmap)
+    folium.LayerControl().add_to(fmap)
+
+    colormap = cm.linear.YlGnBu_09
+    style_function = lambda x: {"weight": 0.5,
+                                'color': 'black',
+                                'fillColor': colormap(x['properties']['rate']),
+                                'fillOpacity': 0.5}
+    highlight_function = lambda x: {'fillColor': '#000000',
+                                    'color': '#000000',
+                                    'fillOpacity': 0.30,
+                                    'weight': 0.1}
+    info = folium.features.GeoJson(
+        data,
+        style_function=style_function,
+        control=False,
+        highlight_function=highlight_function,
+        tooltip=folium.features.GeoJsonTooltip(fields=['station', 'rate'],
+                                               aliases=['station :', 'rate (%) :'],
+                                               style=("background-color: white; color: #333333; font-family: arial; font-size: 12px; padding: 10px;"),
+                                               sticky=True
+                                               )
+    )
+    fmap.add_child(info)
+    fmap.keep_in_front(info)
+
+    legend_html = """
+                 <div style="
+                 position: fixed; 
+                 bottom: 20px; left: 35px; width: 330px; height: 45px; 
+                 z-index:9999; 
+
+                 background-color:white;
+                 
+                 opacity: .3;
+
+                 font-size:30px;
+                 font-weight: bold;
+
+                 ">
+                 &nbsp; {title} 
+                  </div> """.format(title=f'{temp}_{time}', itm_txt="""<br><i style="color:{col}"></i>""")
+    fmap.get_root().html.add_child(folium.Element(legend_html))
+    fmap.save(f'./map/{temp}_{time}_{sh}.html')
+ ```
 
