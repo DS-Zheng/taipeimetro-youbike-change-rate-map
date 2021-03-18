@@ -1,4 +1,4 @@
-# 透過創建geojson與folium視覺化臺北捷運與youbike分時轉換率熱區圖
+# 利用Geojson與folium Choropleth製作臺北捷運與youbike分時轉換率熱區圖
 
 ##  Abstract
 透過公開資料將臺北捷運分時進出站統計數據與youbike公共自行車租用紀錄做轉換率的計算，首先透過捷運站個出口的座標找尋附近的youbike場站，之後透過創建.geojson搭配folium Choropleth產生分時熱區圖，將臺北捷運與youbike的轉換率視覺化。
