@@ -128,7 +128,7 @@ def get_all_mrt_station(ty, time):  #get mrt all station near youbike static Dat
 
 
 ## get square or circle geojson
-#### code -> plot_map.py -> get_square_json() or get_circle_json()
+#### code -> plot_map.py --> get_square_json() or get_circle_json()
 
 ```python
 import json
