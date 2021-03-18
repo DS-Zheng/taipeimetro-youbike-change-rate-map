@@ -169,4 +169,9 @@ def get_circle_json(station_dict):
     json_obj = json.dumps(all_dict)
     return geo_data, json_obj
  ```
+ 
+ * #### state_geo
+
+{"type": "FeatureCollection", "features": [{"type": "Feature", "id": "中山", "properties": {"name": "中山"}, "geometry": {"type": "Polygon", "coordinates": [[[121.52219366666667, 25.05068916666667]...]]]}}]}
+
  ## Preview in [geojson.io](https://geojson.io/#map=12/25.0651/121.5423)
