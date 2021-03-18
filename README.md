@@ -1,7 +1,6 @@
 # 利用Geojson與folium製作臺北捷運與youbike分時轉換率熱區圖
 <p align="center">
   <img src="https://github.com/bruce-zheng0814/taipeimetro-youbike-change-rate-map/blob/master/demo/demo.jpg"><br>
-  <b>🏴‍☠️ Information Gathering tool 🏴‍☠️ - DNS / Subdomains / Ports / Directories enumeration</b><br>
   <br>
   <!-- go-report-card -->
 </p>
