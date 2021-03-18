@@ -263,6 +263,53 @@ def plot_choropleth(gdf, state_geo, time, type_ubike, plot_type):
   #### detail
  ![demo_detail](./demo/demo.jpg)
 
+## Run
+#### code -> main.py
+
+```python
+import pandas as pd
+import datetime
+import geopandas as gpd
+from get_youbike_data import get_all_mrt_station
+import plot_map
+
+y, m, d, h = 2018, 12, 1, 0  # year, month, day, hour
+time = str(datetime.datetime(y, m, d, h, 0, 0))
+
+''' choose mrt {type mrt = in <-> ubike = return} {mrt = out <-> ubike = rent}'''
+
+ty = 'in'
+# ty = 'out'
+
+''' choose plot type'''
+# plot_type = 'circle'
+plot_type = 'square'
+
+data, station_dict, type_ubike = get_all_mrt_station(ty, time)
+
+if plot_type == 'circle':
+    geo_data, state_geo = plot_map.get_circle_json(station_dict)
+else:
+    geo_data, state_geo = plot_map.get_square_json(station_dict)
+
+geo_data = pd.DataFrame.from_dict(geo_data, orient='index',
+                                  columns=['geometry']).reset_index().rename(columns={'index': 'station'})
+gdf = gpd.GeoDataFrame(data, geometry=geo_data['geometry'])
+
+gdf.set_crs(epsg=4326, inplace=True)
+time = time.replace(' ', "_")[:13]
+gdf.to_file(f'./geojson/{type_ubike}_{time}.geojson', driver='GeoJSON')
+plot_map.plot_choropleth(gdf, state_geo, time, type_ubike, plot_type)
+```
+
+* #### data
+* 
+|  | time | station | rate | geometry |
+| :---: | :---: | :---: | :---: |
+| 0 | 2018-12-01 00:00:00 | 中山 | 0.004975 | POLYGON ((121.5221936666667 25.05068916666667,... )) |
+| 1 | 2018-12-01 00:00:00 | 中山國中 | 0.076923 | POLYGON ((121.546031 25.058889, 121.546031 25.... )) |
+| 2 | 2018-12-01 00:00:00 | 中山國小 | 0.050926 | POLYGON ((121.528548 25.060653, 121.528548 25....|
+| ... | ... | ... | ... |
  
 
 
