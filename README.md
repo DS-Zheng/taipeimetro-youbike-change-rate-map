@@ -70,9 +70,9 @@ df_return = pd.DataFrame(data.groupby(['return_time', 'return_station']).size(),
 def get_size(temp, station):
     # get each station static data
     if temp == 'rent':
-        return df_rent[df_rent['rent_station'].isin([station])].reset_index(drop=True)
+        return df_rent[df_rent['rent_station'] == station].reset_index(drop=True)
     else:
-        return df_return[df_return['return_station'].isin([station])].reset_index(drop=True)
+        return df_return[df_return['return_station'] == station].reset_index(drop=True)
 
 
 def cal_data(temp, station_list):
