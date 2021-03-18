@@ -13,16 +13,22 @@
 df_mrt = pd.read_csv('./data/臺北捷運每日分時各站OD流量統計資料_201812.csv',
                      delim_whitespace=True, error_bad_lines=False, low_memory=False).iloc[1:-1]
 df_mrt['人次'] = df_mrt['人次'].astype('int')
+
 df_in = df_mrt.groupby(['日期', '時段', '進站']).sum().reset_index()
 for i in range(len(df_in)):
+    date = df_in.at[i, '日期']
+    hour = df_in.at[i, '時段']
     df_in.at[i, 'time'] = datetime.datetime(
-        int(df_in.at[i, '日期'][:4]), int(df_in.at[i, '日期'][5:7]), int(df_in.at[i, '日期'][8:10]), int(df_in.at[i, '時段']), 0, 0)
-df_in = df_in.rename(columns={'進站': '站點'})
-df_in.to_csv('./data/in.csv', index=False, encoding='utf-8-sig')
+        int(date[:4]), int(date[5:7]), int(date[8:10]), int(hour), 0, 0)
+    
+df_in.rename(columns={'進站': '站點'}).to_csv('./data/in.csv', index=False, encoding='utf-8-sig')
+
 df_out = df_mrt.groupby(['日期', '時段', '出站']).sum().reset_index()
 for i in range(len(df_out)):
+    date = df_out.at[i, '日期']
+    hour = df_out.at[i, '時段']
     df_out.at[i, 'time'] = datetime.datetime(
-        int(df_out.at[i, '日期'][:4]), int(df_out.at[i, '日期'][5:7]), int(df_out.at[i, '日期'][8:10]), int(df_out.at[i, '時段']), 0, 0)
-df_out = df_out.rename(columns={'出站': '站點'})
-df_out.to_csv('./data/out.csv', index=False, encoding='utf-8-sig')
+        int(date[:4]), int(date[5:7]), int(date[8:10]), int(hour), 0, 0)
+
+df_out.rename(columns={'出站': '站點'}).to_csv('./data/out.csv', index=False, encoding='utf-8-sig')
 ```
