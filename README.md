@@ -1,7 +1,7 @@
 # 利用Geojson與folium製作臺北捷運與youbike分時轉換率熱區圖
 
 ##  Abstract
-透過公開資料將臺北捷運分時進出站統計數據與youbike公共自行車租用紀錄做轉換率的計算，首先透過捷運站個出口的座標找尋附近的youbike場站，之後透過創建.geojson搭配folium Choropleth產生分時熱區圖，將臺北捷運與youbike的轉換率視覺化
+  透過公開資料將臺北捷運分時進出站統計數據與youbike公共自行車租用紀錄做轉換率的計算，首先透過捷運站個出口的座標找尋附近的youbike場站，之後透過創建.geojson搭配folium Choropleth產生分時熱區圖，將臺北捷運與youbike的轉換率視覺化
 
 ## Data Source
 - [臺北捷運各站分時進出量統計](http://163.29.157.32:8080/fi/dataset/98d67c29-464a-4003-9f78-b1cbb89bff59)
@@ -260,7 +260,61 @@ def plot_choropleth(gdf, state_geo, time, type_ubike, plot_type):
  ![demo_return_square](./demo/demo_rent_square.png)
   #### circle
  ![demo_return_circle](./demo/demo_return_circle.jpg)
+  #### detail
+ ![demo_detail](./demo/demo.jpg)
 
+## Run
+#### code -> main.py
+
+```python
+import pandas as pd
+import datetime
+import geopandas as gpd
+from get_youbike_data import get_all_mrt_station
+import plot_map
+
+y, m, d, h = 2018, 12, 1, 0  # year, month, day, hour
+time = str(datetime.datetime(y, m, d, h, 0, 0))
+
+''' choose mrt {type mrt = in <-> ubike = return} {mrt = out <-> ubike = rent}'''
+
+ty = 'in'
+# ty = 'out'
+
+''' choose plot type'''
+# plot_type = 'circle'
+plot_type = 'square'
+
+data, station_dict, type_ubike = get_all_mrt_station(ty, time)
+
+if plot_type == 'circle':
+    geo_data, state_geo = plot_map.get_circle_json(station_dict)
+else:
+    geo_data, state_geo = plot_map.get_square_json(station_dict)
+
+geo_data = pd.DataFrame.from_dict(geo_data, orient='index',
+                                  columns=['geometry']).reset_index().rename(columns={'index': 'station'})
+gdf = gpd.GeoDataFrame(data, geometry=geo_data['geometry'])
+
+gdf.set_crs(epsg=4326, inplace=True)
+time = time.replace(' ', "_")[:13]
+gdf.to_file(f'./geojson/{type_ubike}_{time}.geojson', driver='GeoJSON')
+plot_map.plot_choropleth(gdf, state_geo, time, type_ubike, plot_type)
+```
+
+* #### gdf
+
+|  | time | station | rate | geometry |
+| :---: | :---: | :---: | :---: | :---: |
+| 0 | 2018-12-01 00:00:00 | 中山 | 0.004975 | POLYGON ((121.5221936666667 25.05068916666667,... )) |
+| 1 | 2018-12-01 00:00:00 | 中山國中 | 0.076923 | POLYGON ((121.546031 25.058889, 121.546031 25.... )) |
+| 2 | 2018-12-01 00:00:00 | 中山國小 | 0.050926 | POLYGON ((121.528548 25.060653, 121.528548 25....|
+| ... | ... | ... | ... | ... |
  
+## Conclusion
+  最終能得到各小時臺北捷運分時進出站統計數據與youbike公共自行車租用紀錄轉換率熱區圖，得到.html的map，若想要.png or .jpg ，可以使用selenium.webdriver透過瀏覽器來Screenshot，
+  最後完成!收工!
+  T
+  :)
 
 
