@@ -9,9 +9,14 @@
 - [臺北市自行車租借紀錄](https://data.taipei/#/dataset/detail?id=9d9de741-c814-450d-b6bb-af8c438f08e5)
 
 ## Data Prepare
+
 ```python
-df_mrt = pd.read_csv('./data/臺北捷運每日分時各站OD流量統計資料_201812.csv',
-                     delim_whitespace=True, error_bad_lines=False, low_memory=False).iloc[1:-1]
+import pandas as pd
+import datetime
+
+#Prepare Data
+df_mrt = pd.read_csv('./data/臺北捷運每日分時各站OD流量統計資料_201812.csv', delim_whitespace=True,
+                     error_bad_lines=False).iloc[1:-1]
 df_mrt['人次'] = df_mrt['人次'].astype('int')
 
 df_in = df_mrt.groupby(['日期', '時段', '進站']).sum().reset_index()
