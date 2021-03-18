@@ -169,15 +169,17 @@ def get_circle_json(station_dict):
     return geo_data, state_geo
  ```
   * #### geo_data
+  - met_station shape dict
 ```
 {'中山': <shapely.geometry.polygon.Polygon object at 0x0000023C2E20DAC0>, '中山國中': <shapely.geometry.polygon.Polygon object at 0x0000023C2E5B30D0>,...}  
 ```
 
  * #### state_geo
+ - met_station shape geojson
 ```
 {"type": "FeatureCollection", "features": [{"type": "Feature", "id": "中山", "properties": {"name": "中山"}, "geometry": {"type": "Polygon", "coordinates": [[[121.52219366666667, 25.05068916666667]...]]]}}]}    
 ```
 
 
 
- ## Preview in [geojson.io](https://geojson.io/#map=12/25.0651/121.5423)
+ ## Preview state_geo in [geojson.io](https://geojson.io/#map=12/25.0651/121.5423)
