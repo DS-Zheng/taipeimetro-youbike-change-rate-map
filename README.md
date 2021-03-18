@@ -113,8 +113,8 @@ def get_all_mrt_station(ty, time):  #get mrt all station near youbike static Dat
             data.at[index, 'rate'] = select.at[t, 'size'] / select.at[t, '人次']  # change rate
     return data.reset_index(drop=True), station_dict, type_ubike
  ```
- 
- |  | time | station | rate |
+
+|  | time | station | rate |
 | ------------- | ------------- |
 | 0 | 2018-12-01 00:00:00 | 中山 | 0.004975 |
 | 1 | 2018-12-01 00:00:00 | 中山國中 | 0.076923 |
