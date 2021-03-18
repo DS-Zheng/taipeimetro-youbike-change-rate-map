@@ -180,7 +180,7 @@ def get_circle_json(station_dict):
 {"type": "FeatureCollection", "features": [{"type": "Feature", "id": "中山", "properties": {"name": "中山"}, "geometry": {"type": "Polygon", "coordinates": [[[121.52219366666667, 25.05068916666667]...]]]}}]}    
 ```
 
- ## Preview state_geo on [geojson.io](https://geojson.io/#map=12/25.0651/121.5423)
+## Preview state_geo on [geojson.io](https://geojson.io/#map=12/25.0651/121.5423)
   #### square
  ![preview_square](preview_square.PNG)
   #### circle
@@ -255,4 +255,10 @@ def plot_choropleth(gdf, state_geo, time, type_ubike, plot_type):
     fmap.get_root().html.add_child(folium.Element(legend_html))
     fmap.save(f'./map/{type_ubike}_{time}_{plot_type}.html') # save map
  ```
+ ## Preview map 
+  #### square
+ [demo](http://htmlpreview.github.io/https://github.com/bruce-zheng0814/taipeimetro-youbike-change-rate-map/map/rent_2018-12-01_00_square.html)
+ [demo](http://bruce-zheng0814.github.io/taipeimetro-youbike-change-rate-map/map/rent_2018-12-01_00_square.html)
+ 
+
 
