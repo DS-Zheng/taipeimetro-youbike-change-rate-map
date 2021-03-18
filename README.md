@@ -260,6 +260,8 @@ def plot_choropleth(gdf, state_geo, time, type_ubike, plot_type):
  ![demo_return_square](./demo/demo_rent_square.png)
   #### circle
  ![demo_return_circle](./demo/demo_return_circle.jpg)
+  #### detail
+ ![demo_detail](./demo/demo.jpg)
 
  
 
