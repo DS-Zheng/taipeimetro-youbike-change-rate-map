@@ -123,9 +123,9 @@ def get_all_mrt_station(ty, time):  #get mrt all station near youbike static Dat
 | ... | ... | ... | ... |
 
 * #### station_dict
-
+```
     {'中山': [0.002, 25.052689166666667, 121.52019366666667], '中山國中': [0.002, 25.060889, 121.544031],...}    
-
+```
 
 ## Get Square or Circle Geojson
 #### code -> plot_map.py --> get_square_json() or get_circle_json()
@@ -171,7 +171,8 @@ def get_circle_json(station_dict):
  ```
  
  * #### state_geo
-
+```
     {"type": "FeatureCollection", "features": [{"type": "Feature", "id": "中山", "properties": {"name": "中山"}, "geometry": {"type": "Polygon", "coordinates": [[[121.52219366666667, 25.05068916666667]...]]]}}]}    
+```
 
  ## Preview in [geojson.io](https://geojson.io/#map=12/25.0651/121.5423)
