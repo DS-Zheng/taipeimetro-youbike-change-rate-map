@@ -183,3 +183,8 @@ def get_circle_json(station_dict):
 
 
  ## Preview state_geo in [geojson.io](https://geojson.io/#map=12/25.0651/121.5423)
+  #### square
+ ![preview_circle](preview_square.png)
+  #### circle
+ ![preview_circle](preview_circle.png)
+
