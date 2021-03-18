@@ -186,9 +186,9 @@ def get_circle_json(station_dict):
 ```
 
 ## Preview state_geo on [geojson.io](https://geojson.io/#map=12/25.0651/121.5423)
-  #### square
+  ### Square
  ![preview_square](./preview/preview_square.PNG)
-  #### circle
+  ### Circle
  ![preview_circle](./preview/preview_circle.PNG)
  
 ## Let Square or Circle Geojson to Heatmap
