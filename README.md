@@ -30,7 +30,7 @@ df_out = df.groupby(['time', '出站']).sum().reset_index()
 df_out.rename(columns={'出站': '站點'}).to_csv('./data/out.csv', index=False, encoding='utf-8-sig')
 ```
 
-## Find Mrt_station Mear Youbike_station
+## Find Mrt_station Near Youbike_station
 #### find_youbike_station.py
 
 ```python
