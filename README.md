@@ -47,7 +47,7 @@ mrt_out_wgs['站點'] = mrt_out_wgs['出入口名稱'].str.split('站', expand=T
 def find(station):
     temp = mrt_out_wgs[mrt_out_wgs['站點'] == station].reset_index(drop=True)  # select station
     center_lat, center_lon = np.mean(temp['緯度']), np.mean(temp['經度'])  # Calculate exits center point
-    radius = 0.002
+    radius = 0.002  # 200m
     neighbor = []
     for x in range(len(ubike_wgs)):
         if (ubike_wgs.at[x, 'lat'] - center_lat) ** 2 + (ubike_wgs.at[x, 'lng'] - center_lon) ** 2 < radius ** 2:
@@ -84,5 +84,84 @@ def cal_data(temp, station_list):
         return df.groupby(['rent_time']).sum().reset_index().rename(columns={'rent_time': 'time', 'rent_size': 'size'})
     else:
         return df.groupby(['return_time']).sum().reset_index().rename(columns={'return_time': 'time', 'return_size': 'size'})
+        
+def get_all_mrt_station(ty, time):  # ty -> in or out (mrt) time -> datetime
+    # read mrt data
+    # if mrt type = in -> youbike = return
+    # if mrt type = out -> youbike = rent
+
+    if ty == 'in':
+        df = pd.read_csv('./data/in.csv')
+        type_ubike = 'return'
+    else:
+        df = pd.read_csv('./data/out.csv')  # read mrt data
+        type_ubike = 'rent'
+    station_list = list(df['站點'].unique())  # get all station
+    station_dict = {}
+    data = pd.DataFrame()
+    for index, station in enumerate(station_list):
+        print(station)
+        radius, center_lat, center_lon, neighbor = find_youbike_station.find(station)  # get station near range info
+        select = df[df['站點'] == station].reset_index()  # select mrt data
+        t = select[select['time'] == time].index.tolist()[0]  # get time index
+        if len(neighbor) > 0:  # if station near have youbike station
+            station_dict[station] = [radius, center_lat, center_lon]  # save station range
+            df_ubike = cal_data(type_ubike, neighbor)  # get youbike data
+            select = select.merge(df_ubike, on=['time'], how='left').fillna(0)  # merge youbike data & mrt data
+            data.at[index, 'station'] = station
+            data.at[index, 'rate'] = select.at[t, 'size'] / select.at[t, '人次']  # change rate
+    return data.reset_index(drop=True), station_dict, type_ubike
+ ```
+  
+## get mrt all station near youbike static Data
+#### code -> get_youbike_data.py
+
+```python
+import pandas as pd
+import datetime
+import geopandas as gpd
+import numpy as np
+import find_youbike_station
+from get_youbike_data import cal_data
+import plot_map
+
+
+
+
+y, m, d, h = 2018, 12, 1, 0  # year, month, day, hour
+
+''' choose mrt {type mrt = in <-> ubike = return} {mrt = out <-> ubike = rent}'''
+ty = 'in'
+# ty = 'out'
+
+''' choose plot type'''
+plot_type = 'circle'
+# plot_type = 'square'
+
+if ty == 'in':
+    df = pd.read_csv('./data/in.csv')
+    type_ubike = 'return'
+else:
+    df = pd.read_csv('./data/out.csv')
+    type_ubike = 'rent'
+
+station_list = list(df['站點'].unique())
+
+time = str(datetime.datetime(y, m, d, h, 0, 0))
+print(time)
+station_dict = {}
+data = pd.DataFrame()
+for index, station in enumerate(station_list):
+    print(station)
+    radius, center_lat, center_lon, neighbor = find_youbike_station.find(station)
+    select = df[df['站點'] == station].reset_index()
+    t = select[select['time'] == time].index.tolist()[0]
+    if len(neighbor) > 0:
+        station_dict[station] = [radius, center_lat, center_lon]
+        df_ubike = cal_data(type_ubike, neighbor)
+        select = select.merge(df_ubike, on=['time'], how='left').fillna(0)
+        data.at[index, 'station'] = station
+        data.at[index, 'rate'] = select.at[t, 'size'] / select.at[t, '人次']
+data = data.reset_index(drop=True)
  ```
  
