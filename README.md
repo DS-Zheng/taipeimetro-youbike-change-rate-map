@@ -34,14 +34,10 @@ df_out.rename(columns={'出站': '站點'}).to_csv('./data/out.csv', index=False
 #### mrt_data_prepare.py
 
 ```python
-import pandas as pd
-import numpy as np
-
-ubike_wgs = pd.read_csv('./data/ubike_wgs.csv')[['sno', 'sna', 'lat', 'lng']].sort_values(by=['lng', 'lat']).reset_index(drop=True)
-mrt_out_wgs = pd.read_csv('./data/臺北捷運車站出入口座標.csv', encoding='utf-8')
-mrt_out_wgs['站點'] = mrt_out_wgs['出入口名稱'].str.split('站', expand=True)[0]
-
 def find(station):
+    ubike_wgs = pd.read_csv('./data/ubike_wgs.csv')[['sno', 'sna', 'lat', 'lng']].sort_values(by=['lng', 'lat']).reset_index(drop=True)
+    mrt_out_wgs = pd.read_csv('./data/臺北捷運車站出入口座標.csv', encoding='utf-8')
+    mrt_out_wgs['站點'] = mrt_out_wgs['出入口名稱'].str.split('站', expand=True)[0]
     temp = mrt_out_wgs[mrt_out_wgs['站點'] == station].reset_index(drop=True)
     center_lat, center_lon = np.mean(temp['緯度']), np.mean(temp['經度'])
     radius = 0
