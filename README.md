@@ -259,7 +259,7 @@ def plot_choropleth(gdf, state_geo, time, type_ubike, plot_type):
   #### square
  [demo](http://htmlpreview.github.io/?https://github.com/bruce-zheng0814/taipeimetro-youbike-change-rate-map/map/rent_2018-12-01_00_square.html)
  [demo](http://htmlpreview.github.io/?https://github.com/bruce-zheng0814/taipeimetro-youbike-change-rate-map/blob/master/map/return_2018-12-01_00_circle.html)
- 
+ http://htmlpreview.github.io/?https://github.com/user/project/index.html
  [demo](http://bruce-zheng0814.github.io/taipeimetro-youbike-change-rate-map/map/rent_2018-12-01_00_square.html)
  
 
