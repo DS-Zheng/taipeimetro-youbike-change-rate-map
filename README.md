@@ -9,7 +9,7 @@
 - [臺北市自行車租借紀錄](https://data.taipei/#/dataset/detail?id=9d9de741-c814-450d-b6bb-af8c438f08e5)
 
 ## Data Prepare
-#### mrt_data_prepare.py
+#### code -> rt_data_prepare.py
 
 ```python
 import pandas as pd
@@ -31,7 +31,7 @@ df_out.rename(columns={'出站': '站點'}).to_csv('./data/out.csv', index=False
 ```
 
 ## Find Mrt_station Near Youbike_station
-#### find_youbike_station.py
+#### code -> find_youbike_station.py
 
 ```python
 import pandas as pd
