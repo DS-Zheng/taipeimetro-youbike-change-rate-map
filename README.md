@@ -123,6 +123,7 @@ def get_all_mrt_station(ty, time):  #get mrt all station near youbike static Dat
 | ... | ... | ... | ... |
 
 * station_dict
+
 {'中山': [0.002, 25.052689166666667, 121.52019366666667], '中山國中': [0.002, 25.060889, 121.544031],...}
 
 
