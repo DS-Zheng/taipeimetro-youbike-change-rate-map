@@ -312,7 +312,9 @@ plot_map.plot_choropleth(gdf, state_geo, time, type_ubike, plot_type)
 | ... | ... | ... | ... | ... |
  
 ## Conclusion
-  最終能得到各小時臺北捷運分時進出站統計數據與youbike公共自行車租用紀錄轉換率熱區圖，得到.html的map，完成收工!
+  最終能得到各小時臺北捷運分時進出站統計數據與youbike公共自行車租用紀錄轉換率熱區圖，得到.html的map，若想要.png or .jpg ，可以使用selenium.webdriver透過瀏覽器來Screenshot，
+  最後完成!收工!
+  T
   :)
 
 
