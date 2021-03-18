@@ -260,14 +260,14 @@ def plot_choropleth(gdf, state_geo, time, type_ubike, plot_type):
     fmap.get_root().html.add_child(folium.Element(legend_html))
     fmap.save(f'./map/{type_ubike}_{time}_{plot_type}.html')  # save map
  ```
- ## Demo map 
- [square demo](http://htmlpreview.github.io/?https://github.com/BD-Zheng/taipeimetro-youbike-change-rate-map/blob/master/map/return_2018-12-01_00_circle.html)  
- 
- [circle demo](https://bd-zheng.github.io/taipeimetro-youbike-change-rate-map/map/rent_2018-12-01_00_square.html)   
+ ## Demo map  
  
   #### square
+  ###[square demo](https://bd-zheng.github.io/taipeimetro-youbike-change-rate-map/map/rent_2018-12-01_00_square.html)
  ![demo_return_square](./demo/demo_rent_square.png)
+ 
   #### circle
+ ###[circle demo](https://bd-zheng.github.io/taipeimetro-youbike-change-rate-map/map/return_2018-12-01_00_circle.html)  
  ![demo_return_circle](./demo/demo_return_circle.jpg)
   #### detail
  ![demo_detail](./demo/demo.jpg)
