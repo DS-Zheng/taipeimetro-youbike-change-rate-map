@@ -127,55 +127,46 @@ def get_all_mrt_station(ty, time):  #get mrt all station near youbike static Dat
 {'中山': [0.002, 25.052689166666667, 121.52019366666667], '中山國中': [0.002, 25.060889, 121.544031],...}
 
 
-## get mrt all station near youbike static Data
-#### code -> get_youbike_data.py
+## get square or circle geojson
+#### code -> plot_map.py.get_square_json() or plot_map.py.get_circle_json()
 
 ```python
-import pandas as pd
-import datetime
-import geopandas as gpd
-import numpy as np
-import find_youbike_station
-from get_youbike_data import cal_data
-import plot_map
+import json
+from shapely.geometry import Polygon, Point
+import shapely
 
 
+def get_square_json(station_dict):
+    features = []
+    geo_data = dict()
+    for index, station_data in enumerate(list(station_dict.items())):
+        station, radius, center_lat, center_lon = station_data[0], station_data[1][0], station_data[1][1], station_data[1][2]
+        top = float(center_lon) + radius
+        down = float(center_lon) - radius
+        right = float(center_lat) + radius
+        left = float(center_lat) - radius
+        area = [[[top, left], [top, right], [down, right], [down, left], [top, left]]]
+        type_dict = {"type": "Feature", "id": station, "properties": {"name": station}, "geometry": {"type": "Polygon", "coordinates": area}}
+        features.append(type_dict)
+        geo_data[station] = Polygon([(top, left), (top, right), (down, right), (down, left), (top, left)])
+    all_dict = {"type": "FeatureCollection", "features": features}
+    json_obj = json.dumps(all_dict)
+    return geo_data, json_obj
 
+def get_circle_json(station_dict):
+    features = []
+    geo_data = dict()
+    for index, station_data in enumerate(list(station_dict.items())):
+        station, radius, center_lat, center_lon = station_data[0], station_data[1][0], station_data[1][1], station_data[1][2]
+        center = Point([center_lon, center_lat])
 
-y, m, d, h = 2018, 12, 1, 0  # year, month, day, hour
+        circle = center.buffer(radius)  # Degrees Radius
+        type_dict = {"type": "Feature", "id": station, "properties": {"name": station}, "geometry": shapely.geometry.mapping(circle)}
+        features.append(type_dict)
+        geo_data[station] = Polygon(shapely.geometry.mapping(circle)['coordinates'][0])
 
-''' choose mrt {type mrt = in <-> ubike = return} {mrt = out <-> ubike = rent}'''
-ty = 'in'
-# ty = 'out'
-
-''' choose plot type'''
-plot_type = 'circle'
-# plot_type = 'square'
-
-if ty == 'in':
-    df = pd.read_csv('./data/in.csv')
-    type_ubike = 'return'
-else:
-    df = pd.read_csv('./data/out.csv')
-    type_ubike = 'rent'
-
-station_list = list(df['站點'].unique())
-
-time = str(datetime.datetime(y, m, d, h, 0, 0))
-print(time)
-station_dict = {}
-data = pd.DataFrame()
-for index, station in enumerate(station_list):
-    print(station)
-    radius, center_lat, center_lon, neighbor = find_youbike_station.find(station)
-    select = df[df['站點'] == station].reset_index()
-    t = select[select['time'] == time].index.tolist()[0]
-    if len(neighbor) > 0:
-        station_dict[station] = [radius, center_lat, center_lon]
-        df_ubike = cal_data(type_ubike, neighbor)
-        select = select.merge(df_ubike, on=['time'], how='left').fillna(0)
-        data.at[index, 'station'] = station
-        data.at[index, 'rate'] = select.at[t, 'size'] / select.at[t, '人次']
-data = data.reset_index(drop=True)
+    all_dict = {"type": "FeatureCollection", "features": features}
+    json_obj = json.dumps(all_dict)
+    return geo_data, json_obj
  ```
  
