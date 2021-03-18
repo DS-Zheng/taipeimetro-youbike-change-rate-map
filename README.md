@@ -84,8 +84,9 @@ def cal_data(temp, station_list):
         return df.groupby(['rent_time']).sum().reset_index().rename(columns={'rent_time': 'time', 'rent_size': 'size'})
     else:
         return df.groupby(['return_time']).sum().reset_index().rename(columns={'return_time': 'time', 'return_size': 'size'})
-        
-def get_all_mrt_station(ty, time):  # ty -> in or out (mrt) time -> datetime
+ 
+def get_all_mrt_station(ty, time):  #get mrt all station near youbike static Data
+    # ty -> in or out (mrt) time -> datetime
     # read mrt data
     # if mrt type = in -> youbike = return
     # if mrt type = out -> youbike = rent
