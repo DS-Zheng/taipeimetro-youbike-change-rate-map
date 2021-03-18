@@ -19,8 +19,9 @@ def get_square_json(station_dict):
         features.append(type_dict)
         geo_data[station] = Polygon([(top, left), (top, right), (down, right), (down, left), (top, left)])
     all_dict = {"type": "FeatureCollection", "features": features}
-    json_obj = json.dumps(all_dict)
-    return geo_data, json_obj
+    state_geo = json.dumps(all_dict)
+    return geo_data, state_geo
+
 
 def get_circle_json(station_dict):
     features = []
@@ -28,22 +29,22 @@ def get_circle_json(station_dict):
     for index, station_data in enumerate(list(station_dict.items())):
         station, radius, center_lat, center_lon = station_data[0], station_data[1][0], station_data[1][1], station_data[1][2]
         center = Point([center_lon, center_lat])
-
         circle = center.buffer(radius)  # Degrees Radius
         type_dict = {"type": "Feature", "id": station, "properties": {"name": station}, "geometry": shapely.geometry.mapping(circle)}
         features.append(type_dict)
         geo_data[station] = Polygon(shapely.geometry.mapping(circle)['coordinates'][0])
 
     all_dict = {"type": "FeatureCollection", "features": features}
-    json_obj = json.dumps(all_dict)
-    return geo_data, json_obj
-def plot_choropleth(data, state_geo, time, temp, sh):
-    print(data)
-    fmap = folium.Map(location=[25.0516, 121.552], zoom_start=13)
-    folium.TileLayer('CartoDB positron', name="Light Map", control=False).add_to(fmap)
+    state_geo = json.dumps(all_dict)
+    return geo_data, state_geo
+
+
+def plot_choropleth(gdf, state_geo, time, type_ubike, plot_type):
+    fmap = folium.Map(location=[25.0516, 121.552], zoom_start=13)  # map center
+    folium.TileLayer('CartoDB positron', name="Light Map", control=False).add_to(fmap)  # base map
     folium.Choropleth(
-        geo_data=state_geo,
-        data=data,
+        geo_data=state_geo,  # square or circle geojson
+        data=gdf,
         name='choropleth',
         columns=['station', 'rate'],
         key_on='feature.id',
@@ -66,7 +67,7 @@ def plot_choropleth(data, state_geo, time, temp, sh):
                                     'fillOpacity': 0.30,
                                     'weight': 0.1}
     info = folium.features.GeoJson(
-        data,
+        gdf,
         style_function=style_function,
         control=False,
         highlight_function=highlight_function,
@@ -79,7 +80,8 @@ def plot_choropleth(data, state_geo, time, temp, sh):
     fmap.add_child(info)
     fmap.keep_in_front(info)
 
-    legend_html = """
+    # add a div on map
+    legend_html = """ 
                  <div style="
                  position: fixed; 
                  bottom: 20px; left: 35px; width: 330px; height: 45px; 
@@ -94,6 +96,7 @@ def plot_choropleth(data, state_geo, time, temp, sh):
 
                  ">
                  &nbsp; {title} 
-                  </div> """.format(title=f'{temp}_{time}', itm_txt="""<br><i style="color:{col}"></i>""")
+                  </div> """.format(title=f'{type_ubike}_{time}', itm_txt="""<br><i style="color:{col}"></i>""")
+
     fmap.get_root().html.add_child(folium.Element(legend_html))
-    fmap.save(f'./map/{temp}_{time}_{sh}.html')
+    fmap.save(f'./map/{type_ubike}_{time}_{plot_type}.html')  # save map
