@@ -193,13 +193,12 @@ import folium
 import branca.colormap as cm
 
 
-def plot_choropleth(data, state_geo, time, temp, sh):
-    print(data)
-    fmap = folium.Map(location=[25.0516, 121.552], zoom_start=13)
-    folium.TileLayer('CartoDB positron', name="Light Map", control=False).add_to(fmap)
+def plot_choropleth(gdf, state_geo, time, type_ubike, plot_type):
+    fmap = folium.Map(location=[25.0516, 121.552], zoom_start=13) # map center
+    folium.TileLayer('CartoDB positron', name="Light Map", control=False).add_to(fmap) # base map
     folium.Choropleth(
-        geo_data=state_geo,
-        data=data,
+        geo_data=state_geo, # square or circle geojson
+        data=gdf,
         name='choropleth',
         columns=['station', 'rate'],
         key_on='feature.id',
@@ -222,7 +221,7 @@ def plot_choropleth(data, state_geo, time, temp, sh):
                                     'fillOpacity': 0.30,
                                     'weight': 0.1}
     info = folium.features.GeoJson(
-        data,
+        gdf,
         style_function=style_function,
         control=False,
         highlight_function=highlight_function,
@@ -234,8 +233,9 @@ def plot_choropleth(data, state_geo, time, temp, sh):
     )
     fmap.add_child(info)
     fmap.keep_in_front(info)
-
-    legend_html = """
+    
+    # add a div on map
+    legend_html = """ 
                  <div style="
                  position: fixed; 
                  bottom: 20px; left: 35px; width: 330px; height: 45px; 
@@ -250,8 +250,9 @@ def plot_choropleth(data, state_geo, time, temp, sh):
 
                  ">
                  &nbsp; {title} 
-                  </div> """.format(title=f'{temp}_{time}', itm_txt="""<br><i style="color:{col}"></i>""")
+                  </div> """.format(title=f'{type_ubike}_{time}', itm_txt="""<br><i style="color:{col}"></i>""")
+    
     fmap.get_root().html.add_child(folium.Element(legend_html))
-    fmap.save(f'./map/{temp}_{time}_{sh}.html')
+    fmap.save(f'./map/{type_ubike}_{time}_{plot_type}.html') # save map
  ```
 
