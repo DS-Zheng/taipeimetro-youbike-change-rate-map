@@ -1,7 +1,7 @@
 # 利用Geojson與folium製作臺北捷運與youbike分時轉換率熱區圖
 
 ##  Abstract
-透過公開資料將臺北捷運分時進出站統計數據與youbike公共自行車租用紀錄做轉換率的計算，首先透過捷運站個出口的座標找尋附近的youbike場站，之後透過創建.geojson搭配folium Choropleth產生分時熱區圖，將臺北捷運與youbike的轉換率視覺化
+  透過公開資料將臺北捷運分時進出站統計數據與youbike公共自行車租用紀錄做轉換率的計算，首先透過捷運站個出口的座標找尋附近的youbike場站，之後透過創建.geojson搭配folium Choropleth產生分時熱區圖，將臺北捷運與youbike的轉換率視覺化
 
 ## Data Source
 - [臺北捷運各站分時進出量統計](http://163.29.157.32:8080/fi/dataset/98d67c29-464a-4003-9f78-b1cbb89bff59)
@@ -302,8 +302,8 @@ gdf.to_file(f'./geojson/{type_ubike}_{time}.geojson', driver='GeoJSON')
 plot_map.plot_choropleth(gdf, state_geo, time, type_ubike, plot_type)
 ```
 
-* #### data
-* 
+* #### gdf
+
 |  | time | station | rate | geometry |
 | :---: | :---: | :---: | :---: | :---: |
 | 0 | 2018-12-01 00:00:00 | 中山 | 0.004975 | POLYGON ((121.5221936666667 25.05068916666667,... )) |
@@ -311,5 +311,8 @@ plot_map.plot_choropleth(gdf, state_geo, time, type_ubike, plot_type)
 | 2 | 2018-12-01 00:00:00 | 中山國小 | 0.050926 | POLYGON ((121.528548 25.060653, 121.528548 25....|
 | ... | ... | ... | ... | ... |
  
+## Conclusion
+  最終能得到各小時臺北捷運分時進出站統計數據與youbike公共自行車租用紀錄轉換率熱區圖，得到.html的map，完成收工!
+  :)
 
 
