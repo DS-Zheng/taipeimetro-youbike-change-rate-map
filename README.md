@@ -114,6 +114,7 @@ def get_all_mrt_station(ty, time):  #get mrt all station near youbike static Dat
     return data.reset_index(drop=True), station_dict, type_ubike
  ```
 * data
+
 |  | time | station | rate |
 | :---: | :---: | :---: | :---: |
 | 0 | 2018-12-01 00:00:00 | 中山 | 0.004975 |
