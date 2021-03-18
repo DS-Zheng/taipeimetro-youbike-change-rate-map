@@ -182,9 +182,9 @@ def get_circle_json(station_dict):
 
 ## Preview state_geo on [geojson.io](https://geojson.io/#map=12/25.0651/121.5423)
   #### square
- ![preview_square](preview_square.PNG)
+ ![preview_square](./preview/preview_square.PNG)
   #### circle
- ![preview_circle](preview_circle.PNG)
+ ![preview_circle](./preview/preview_circle.PNG)
  
 ## Let Square or Circle Geojson to Heatmap
 #### code -> plot_map.py --> plot_choropleth()
