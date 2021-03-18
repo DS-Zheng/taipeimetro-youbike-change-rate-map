@@ -150,8 +150,8 @@ def get_square_json(station_dict):
         features.append(type_dict)
         geo_data[station] = Polygon([(top, left), (top, right), (down, right), (down, left), (top, left)])
     all_dict = {"type": "FeatureCollection", "features": features}
-    json_obj = json.dumps(all_dict)
-    return geo_data, json_obj
+    state_geo = json.dumps(all_dict)
+    return geo_data, state_geo
 
 def get_circle_json(station_dict):
     features = []
@@ -159,15 +159,14 @@ def get_circle_json(station_dict):
     for index, station_data in enumerate(list(station_dict.items())):
         station, radius, center_lat, center_lon = station_data[0], station_data[1][0], station_data[1][1], station_data[1][2]
         center = Point([center_lon, center_lat])
-
         circle = center.buffer(radius)  # Degrees Radius
         type_dict = {"type": "Feature", "id": station, "properties": {"name": station}, "geometry": shapely.geometry.mapping(circle)}
         features.append(type_dict)
         geo_data[station] = Polygon(shapely.geometry.mapping(circle)['coordinates'][0])
 
     all_dict = {"type": "FeatureCollection", "features": features}
-    json_obj = json.dumps(all_dict)
-    return geo_data, json_obj
+    state_geo = json.dumps(all_dict)
+    return geo_data, state_geo
  ```
  
  * #### state_geo
