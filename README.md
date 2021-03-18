@@ -194,10 +194,10 @@ import branca.colormap as cm
 
 
 def plot_choropleth(gdf, state_geo, time, type_ubike, plot_type):
-    fmap = folium.Map(location=[25.0516, 121.552], zoom_start=13) # map center
-    folium.TileLayer('CartoDB positron', name="Light Map", control=False).add_to(fmap) # base map
+    fmap = folium.Map(location=[25.0516, 121.552], zoom_start=13)  # map center
+    folium.TileLayer('CartoDB positron', name="Light Map", control=False).add_to(fmap)  # base map
     folium.Choropleth(
-        geo_data=state_geo, # square or circle geojson
+        geo_data=state_geo,  # square or circle geojson
         data=gdf,
         name='choropleth',
         columns=['station', 'rate'],
@@ -233,7 +233,7 @@ def plot_choropleth(gdf, state_geo, time, type_ubike, plot_type):
     )
     fmap.add_child(info)
     fmap.keep_in_front(info)
-    
+
     # add a div on map
     legend_html = """ 
                  <div style="
@@ -251,16 +251,16 @@ def plot_choropleth(gdf, state_geo, time, type_ubike, plot_type):
                  ">
                  &nbsp; {title} 
                   </div> """.format(title=f'{type_ubike}_{time}', itm_txt="""<br><i style="color:{col}"></i>""")
-    
+
     fmap.get_root().html.add_child(folium.Element(legend_html))
-    fmap.save(f'./map/{type_ubike}_{time}_{plot_type}.html') # save map
+    fmap.save(f'./map/{type_ubike}_{time}_{plot_type}.html')  # save map
  ```
- ## Preview map 
+ ## Demo map 
   #### square
- [demo](http://htmlpreview.github.io/?https://github.com/bruce-zheng0814/taipeimetro-youbike-change-rate-map/map/rent_2018-12-01_00_square.html)
- [demo](http://htmlpreview.github.io/?https://github.com/bruce-zheng0814/taipeimetro-youbike-change-rate-map/blob/master/map/return_2018-12-01_00_circle.html)
- http://htmlpreview.github.io/?https://github.com/user/project/index.html
- [demo](http://bruce-zheng0814.github.io/taipeimetro-youbike-change-rate-map/map/rent_2018-12-01_00_square.html)
+ ![demo_return_square](./demo/demo_return_square.jpg)
+  #### circle
+ ![demo_return_circle](./demo/demo_return_circle.jpg)
+
  
 
 
