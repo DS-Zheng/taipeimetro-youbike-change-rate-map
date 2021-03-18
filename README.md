@@ -33,7 +33,7 @@ df_out.rename(columns={'出站': '站點'}).to_csv('./data/out.csv', index=False
 ## Data Prepare
 #### mrt_data_prepare.py
 
-```
+```python
 import pandas as pd
 import numpy as np
 
