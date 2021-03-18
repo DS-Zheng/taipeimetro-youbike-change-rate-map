@@ -9,7 +9,7 @@
 - [臺北市自行車租借紀錄](https://data.taipei/#/dataset/detail?id=9d9de741-c814-450d-b6bb-af8c438f08e5)
 
 ## Data Prepare
-#### code -> rt_data_prepare.py
+#### code -> mrt_data_prepare.py
 
 ```python
 import pandas as pd
