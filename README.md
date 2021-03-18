@@ -4,47 +4,6 @@
   <b>🏴‍☠️ Information Gathering tool 🏴‍☠️ - DNS / Subdomains / Ports / Directories enumeration</b><br>
   <br>
   <!-- go-report-card -->
-  <a href="https://goreportcard.com/report/github.com/edoardottt/scilla">
-    <img src="https://goreportcard.com/badge/github.com/edoardottt/scilla" alt="go-report-card" />
-  </a>
-  <!-- workflows -->
-  <a href="https://edoardoottavianelli.it">
-    <img src="https://github.com/edoardottt/scilla/workflows/Go/badge.svg?branch=master" alt="workflows" />
-  </a>
-  <!-- ubuntu-build -->
-  <a href="https://edoardoottavianelli.it">
-    <img src="https://github.com/edoardottt/images/blob/main/scilla/ubuntu-build.svg" alt="ubuntu-build" />
-  </a>
-  <!-- win10-build -->
-  <a href="https://edoardoottavianelli.it">
-    <img src="https://github.com/edoardottt/images/blob/main/scilla/win10.svg" alt="win10-build" />
-  </a>
-  <!-- pr-welcome -->
-  <a href="https://edoardoottavianelli.it">
-    <img src="https://github.com/edoardottt/images/blob/main/scilla/pr-welcome.svg" alt="pr-welcome" />
-  </a>
-
-  <br>
-  
-  <!-- mainteinance -->
-  <a href="https://edoardoottavianelli.it">
-    <img src="https://github.com/edoardottt/images/blob/main/scilla/maintained-yes.svg" alt="Mainteinance yes" />
-  </a>
-  <!-- ask-me-anything -->
-  <a href="https://edoardoottavianelli.it">
-    <img src="https://github.com/edoardottt/images/blob/main/scilla/ask-me-anything.svg" alt="ask me anything" />
-  </a>
-  <!-- gobadge -->
-  <a href="https://edoardoottavianelli.it">
-    <img src="https://github.com/edoardottt/images/blob/main/scilla/gobadge" alt="gobadge" />
-  </a>
-  <!-- license GPLv3.0 -->
- 
-  <br>
-
-  <br>
-  <!--Tweet button-->
- 
 </p>
 
 ##  Abstract
