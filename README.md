@@ -12,7 +12,6 @@
 
 ```python
 import pandas as pd
-import datetime
 
 #Prepare Data
 df = pd.read_csv('./data/臺北捷運每日分時各站OD流量統計資料_201812.csv',
